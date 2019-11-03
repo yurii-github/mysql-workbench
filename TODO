@@ -1,0 +1,58 @@
+--- BUILD workbench -------------------------------
+apt-get remove iodbc
+
+
+
+libgl1-mesa-glx is already the newest version (18.3.6-2).
+libgl1-mesa-glx set to manually installed.
+libpcre3-dev is already the newest version (2:8.43-1+0~20190710.6+debian10~1.gbpbfc49f).
+libpcre3-dev set to manually installed.
+libssl-dev is already the newest version (1.1.1d-1+0~20191009.15+debian10~1.gbpd6badf).
+libssl-dev set to manually installed.
+mysql-client is already the newest version (8.0.18-1debian9).
+mysql-client set to manually installed.
+
+
+
+apt-get install
+
+build-essential
+cmake
+cmake-data
+autoconf
+automake
+libtool
+pkg-config ???
+mysql-client
+libgl1-mesa-glx
+libglu1-mesa-dev
+swig
+libproj13
+libgtk2.0-dev
+
+
+//////// libgnome2-dev libgnome-keyring-dev
+
+libzip-dev libxml2-dev \
+                          libsigc++-2.0-dev libglade2-dev libgtkmm-2.4-dev   \
+                          mesa-common-dev libmysqlclient-dev libmysqlcppconn-dev uuid-dev libpixman-1-dev libpcre3-dev \
+                            libpango1.0-dev libcairo2-dev python-dev \
+                          libboost-dev libctemplate-dev  python-pysqlite2 libsqlite3-dev \
+                           libvsqlitepp-dev libgdal-dev libgtk-3-dev libgtkmm-3.0-dev libssl-dev \
+                          libsecret-1-dev
+
+
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DWITH_ANTLR_JAR=..//antlr-4.7.2-complete.jar
+
+
+
+
+# libgnome2-dev libgnome-keyring-dev
+apt-get install build-essential cmake cmake-data autoconf automake pkg-config libtool libzip-dev libxml2-dev \
+                          libsigc++-2.0-dev libglade2-dev libgtkmm-2.4-dev libglu1-mesa-dev libgl1-mesa-glx \
+                          mesa-common-dev libmysqlclient-dev libmysqlcppconn-dev uuid-dev libpixman-1-dev libpcre3-dev \
+                          libgtk2.0-dev libpango1.0-dev libcairo2-dev python-dev \
+                          libboost-dev libctemplate-dev mysql-client python-pysqlite2 libsqlite3-dev \
+                          swig libvsqlitepp-dev libgdal-dev libgtk-3-dev libgtkmm-3.0-dev libssl-dev \
+                          libsecret-1-dev libproj13
+

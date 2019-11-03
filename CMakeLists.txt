@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
 
+
+
 # Detect build type, fallback to release and throw a warning if use didn't specify any
 if(NOT CMAKE_BUILD_TYPE)
   message(WARNING "Build type not set, falling back to Release mode.
@@ -9,6 +11,8 @@ if(NOT CMAKE_BUILD_TYPE)
        "Choose the type of build, options are: Debug Release RelWithDebInfo"
        FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
+
+
 
 
 # Retrieve current Workbench version
@@ -41,6 +45,21 @@ if(ENABLE_COTIRE)
   set_property(DIRECTORY PROPERTY COTIRE_UNITY_LINK_LIBRARIES_INIT "COPY_UNITY")
 endif()
 
+set(ANTLR_JAR_FILENAME "antlr-4.7.1-complete.jar")
+get_filename_component(SOURCE_PARENT_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
+set(LINUX_RES_BIN_DIR ${SOURCE_PARENT_DIR}/linux-res/bin)
+if(WITH_ANTLR_JAR)
+  get_filename_component(ANTLR_JAR_USER_DIR ${WITH_ANTLR_JAR} DIRECTORY)
+  find_path(ANTLR_JAR_PATH ${ANTLR_JAR_FILENAME} ${LINUX_RES_BIN_DIR} ${ANTLR_JAR_USER_DIR})
+else(WITH_ANTLR_JAR)
+  find_path(ANTLR_JAR_PATH ${ANTLR_JAR_FILENAME} ${LINUX_RES_BIN_DIR})
+endif(WITH_ANTLR_JAR)
+if(ANTLR_JAR_PATH AND Java_JAVA_EXECUTABLE)
+  set(ANTLR_JAR_PATH ${ANTLR_JAR_PATH}/${ANTLR_JAR_FILENAME})
+  message(STATUS "ANTLR jar: " ${ANTLR_JAR_PATH})
+else()
+  message(WARNING ${ANTLR_JAR_FILENAME} " or java runtime wasn't found which is required if you'd like to rebuild Lexer and Parser files")
+endif()
 
 find_package(PkgConfig REQUIRED)
 find_package(Java QUIET)
@@ -49,6 +68,8 @@ find_package(Threads REQUIRED)
 find_package(SWIG REQUIRED)
 include(${SWIG_USE_FILE})
 find_package(ANTLR4 REQUIRED)
+
+#message(FATAL_ERROR "YOYOYO")
 
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
@@ -65,6 +86,7 @@ find_package(PythonLibs 2.6)
 if (NOT PYTHONLIBS_FOUND)
     pkg_check_modules(PYTHON REQUIRED python)
 endif ()
+
 
 
 # We need to be able to detect python module versions and packages hence this function
@@ -113,6 +135,7 @@ if (UNIX)
 endif(UNIX)
 
 
+
 pkg_check_modules(PCRE REQUIRED libpcre libpcrecpp)
 pkg_check_modules(CAIRO REQUIRED cairo>=1.5.12)
 pkg_check_modules(UUID REQUIRED uuid)
@@ -137,21 +160,9 @@ check_function_exists (strtoull HAVE_STRTOULL)
 check_function_exists (strtoimax HAVE_STRTOIMAX)
 check_function_exists (strtoumax HAVE_STRTOUMAX)
 
-set(ANTLR_JAR_FILENAME "antlr-4.7.1-complete.jar")
-get_filename_component(SOURCE_PARENT_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
-set(LINUX_RES_BIN_DIR ${SOURCE_PARENT_DIR}/linux-res/bin)
-if(WITH_ANTLR_JAR)
-  get_filename_component(ANTLR_JAR_USER_DIR ${WITH_ANTLR_JAR} DIRECTORY)
-  find_path(ANTLR_JAR_PATH ${ANTLR_JAR_FILENAME} ${LINUX_RES_BIN_DIR} ${ANTLR_JAR_USER_DIR})
-else(WITH_ANTLR_JAR)
-  find_path(ANTLR_JAR_PATH ${ANTLR_JAR_FILENAME} ${LINUX_RES_BIN_DIR})
-endif(WITH_ANTLR_JAR)
-if(ANTLR_JAR_PATH AND Java_JAVA_EXECUTABLE) 
-  set(ANTLR_JAR_PATH ${ANTLR_JAR_PATH}/${ANTLR_JAR_FILENAME})
-  message(STATUS "ANTLR jar: " ${ANTLR_JAR_PATH})
-else()
-  message(WARNING ${ANTLR_JAR_FILENAME} " or java runtime wasn't found which is required if you'd like to rebuild Lexer and Parser files")
-endif()
+
+
+
 
 
 if (UNIX)
@@ -242,4 +253,4 @@ install(FILES build/build_freetds.sh
 
 install(FILES samples/models/sakila_full.mwb
         DESTINATION ${WB_PACKAGE_SHARED_DIR}/extras)
-       
+

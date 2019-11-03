@@ -6,6 +6,7 @@
 #  ANTLR4_LIBRARIES    - List of libraries when using pcre.
 #  ANTLR4_FOUND        - True if pcre found.
 
+#message(FATAL_ERROR "YOYOYO2")
 
 IF (ANTLR4_INCLUDE_DIRS)
   # Already in cache, be silent
@@ -27,7 +28,7 @@ if(ANTLR4_LIBRARIES)
     endif()
   endforeach(ANTLR4_LIB_ARG)
   find_library(ANTLR4_LIBRARY NAMES ${ANTLR4_NAMES} HINTS ${ANTLR4_SUPPLIED_LIB_DIR})
-  
+
   unset(ANTLR4_LIB_ARG_CLEAR)
   unset(ANTLR4_LIB_ARG)
   unset(ANTLR4_LIB_ARGS)
@@ -35,7 +36,7 @@ else()
   find_library(ANTLR4_LIBRARY NAMES ${ANTLR4_NAMES})
 endif()
 
-# handle the QUIETLY and REQUIRED arguments and set ANTLR4_FOUND to TRUE if 
+# handle the QUIETLY and REQUIRED arguments and set ANTLR4_FOUND to TRUE if
 # all listed variables are TRUE
 INCLUDE(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(ANTLR4 DEFAULT_MSG ANTLR4_LIBRARY ANTLR4_INCLUDE_DIR)
@@ -44,7 +45,7 @@ IF(ANTLR4_FOUND)
   get_filename_component(ANTLR4_LIB_FILENAME ${ANTLR4_LIBRARY} NAME_WE)
   get_filename_component(ANTLR4_LIB_DIRECTORY ${ANTLR4_LIBRARY} PATH)
   get_filename_component(ANTLR4_LIB_BASE_DIRECTORY ${ANTLR4_LIB_DIRECTORY} PATH)
-  set(ANTLR4_INCLUDE_DIR ${ANTLR4_INCLUDE_DIR}/antlr4-runtime) 
+  set(ANTLR4_INCLUDE_DIR ${ANTLR4_INCLUDE_DIR}/antlr4-runtime)
   SET( ANTLR4_LIBRARIES "-L${ANTLR4_LIB_DIRECTORY} -l${ANTLR4_NAMES}" )
   SET( ANTLR4_INCLUDE_DIRS ${ANTLR4_INCLUDE_DIR} )
 ELSE(ANTLR4_FOUND)
