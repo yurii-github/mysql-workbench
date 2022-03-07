@@ -339,11 +339,12 @@ RowBuffer::RowBuffer(std::shared_ptr<std::vector<ColumnInfo> > columns,
           base::strfmt("Unhandled MySQL type %i for column '%s'", col->target_type, col->target_name.c_str()));
     }
 
-#if MYSQL_VERSION_ID >= 80004
-    typedef bool WB_BOOL;
-#else
+//#if MYSQL_VERSION_ID >= 80004
+//    typedef bool WB_BOOL;
+//#else
     typedef my_bool WB_BOOL;
-#endif
+//#endif
+
 
     bind.error = (WB_BOOL *)malloc(sizeof(WB_BOOL));
     if (!bind.error)
@@ -2275,11 +2276,12 @@ bool MySQLCopyDataTarget::append_bulk_column(size_t col_index) {
       case MYSQL_TYPE_DATETIME2:
       case MYSQL_TYPE_TIME2:
 #endif
-#if MYSQL_VERSION_ID > 80016
-      case MYSQL_TYPE_TYPED_ARRAY: /* Used only for replication. */
-#endif
+//#if MYSQL_VERSION_ID > 80016
+//      case MYSQL_TYPE_TYPED_ARRAY: /* Used only for replication. */
+//#endif
+case MAX_NO_FIELD_TYPES:
         // TODO: implement handling
-        break;
+//        break;
       case MYSQL_TYPE_GEOMETRY:
         if (_major_version >= 6 || (_major_version == 5 && _minor_version >= 7) ||
             (_major_version == 5 && _minor_version == 6 && _build_version >= 6))
@@ -2290,14 +2292,14 @@ bool MySQLCopyDataTarget::append_bulk_column(size_t col_index) {
                                                      *(*_row_buffer)[col_index].length);
         _bulk_insert_record.append("')");
         break;
-#if MYSQL_VERSION_ID > 80021
-      case MYSQL_TYPE_INVALID:
-        // TODO: added to fix the build. Need to check how to handle this.
-        break;
-      case MYSQL_TYPE_BOOL:
-        // TODO: added to fix the build. Need to check how to handle this. In the current version this is just a placeholder.
-        break;
-#endif
+//#if MYSQL_VERSION_ID > 80021
+//      case MYSQL_TYPE_INVALID:
+//        // TODO: added to fix the build. Need to check how to handle this.
+//        break;
+//      case MYSQL_TYPE_BOOL:
+//        // TODO: added to fix the build. Need to check how to handle this. In the current version this is just a placeholder.
+//        break;
+//#endif
       
     }
   }
@@ -2687,9 +2689,9 @@ bool MySQLCopyDataTarget::InsertBuffer::append_escaped(const char *data, size_t 
 
 
 #if MYSQL_VERSION_ID >= 50706
-  if (_target->is_mysql_version_at_least(5, 7, 6))
-    ret_length += mysql_real_escape_string_quote(_mysql, buffer + length, data, (unsigned long)dlength, '\'');
-  else
+  //if (_target->is_mysql_version_at_least(5, 7, 6))
+ //   ret_length += mysql_real_escape_string_quote(_mysql, buffer + length, data, (unsigned long)dlength, '\'');
+ // else
     ret_length += mysql_real_escape_string(_mysql, buffer + length, data, (unsigned long)dlength);
 #else
   ret_length += mysql_real_escape_string(_mysql, buffer + length, data, (unsigned long)dlength);

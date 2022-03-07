@@ -51,6 +51,7 @@ else()
   find_library(MySQLCppConn_LIBRARY NAMES ${MySQLCppConn_NAMES})
 endif()
 
+set(MySQLCppConn_INCLUDE_DIR "/usr/include/mysql-cppconn-8/jdbc")
 set(MySQLCppConn_HEADER_FILE ${MySQLCppConn_INCLUDE_DIR}/cppconn/version_info.h)
 file(STRINGS ${MySQLCppConn_HEADER_FILE} MySQLCppConn_VERSION_LINE_MAJOR REGEX "#define MYCPPCONN_DM_MAJOR_VERSION[ ]+[0-9]+")
 if (MySQLCppConn_VERSION_LINE_MAJOR)

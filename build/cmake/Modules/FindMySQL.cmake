@@ -74,7 +74,9 @@ else ()
         find_file(MySQL_VERSION_FILE mysql_version.h ${MySQL_INCLUDE_DIRS})
         file(STRINGS "${MySQL_VERSION_FILE}" MySQL_VERSION_LINE REGEX "MYSQL_SERVER_VERSION")
         string(REGEX REPLACE "#define MYSQL_SERVER_VERSION[ \t]+\"([0-9.]+)\"" "\\1" MySQL_VERSION "${MySQL_VERSION_LINE}")
-        
+        #message("force 8.0.22 version as it does not work for mariaDB in Debian")
+        set(MySQL_VERSION "8.0")
+
         # Find the library:
         set(MySQL_LIBRARY_NAMES mysqlclient mysqlclient_r)
         find_library(MySQL_LIBRARIES
