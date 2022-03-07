@@ -1,3 +1,49 @@
+
+# Yurii Comments
+
+## Install
+
+install `mariadb-client` or `mysql-client` or community client. I preffer to install server so
+```
+apt install mysql-community-server 
+```
+
+install JRE
+```
+apt install default-jre
+```
+
+install dev dependencies
+```
+apt install build-essential cmake autoconf automake pkg-config libtool libzip-dev libxml2-dev libsigc++-2.0-dev libglade2-dev libglu1-mesa-dev libgl1-mesa-glx \
+mesa-common-dev  libmysqlcppconn-dev uuid-dev libpixman-1-dev libpcre3-dev libpango1.0-dev libcairo2-dev \
+libboost-dev libsqlite3-dev swig libvsqlitepp-dev libgdal-dev libgtk-3-dev libgtkmm-3.0-dev libssl-dev libsecret-1-dev libproj-dev \
+libssh-dev rapidjson-dev libantlr4-runtime-dev python3-dev
+```
+
+build
+
+```
+cd /home/yurii/Source/mysql-workbench-repo
+mkdir wb-build
+cd /home/yurii/Source/mysql-workbench-repo/wb-build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DWITH_ANTLR_JAR=/home/yurii/Source/mysql-workbench-repo/antlr-4.9.1-complete.jar -Wno-dev ..
+make
+```
+
+install
+```
+cd /home/yurii/Source/mysql-workbench-repo/wb-build
+sudo make install
+```
+
+## Dev
+
+TODO: read https://mariadb.com/kb/en/incompatibilities-and-feature-differences-between-mariadb-105-and-mysql-80/
+
+---------------------------
+
+
 # MySQL Workbench
 
 Copyright (c) 2007, 2022, Oracle and/or its affiliates.
